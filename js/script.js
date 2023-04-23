@@ -1,5 +1,6 @@
 const mario = document.querySelector('.mario');
 const pipe = document.querySelector('.pipe');
+const clouds = document.querySelector('.clouds');
 
 const jump = () => {
     mario.classList.add('jump')
@@ -11,6 +12,7 @@ const jump = () => {
 
 const loop = setInterval(() => {
     const pipePosition = pipe.offsetLeft;
+    const cloudsPosition = +window.getComputedStyle(clouds).right.replace('px', '');
     const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '');
 
     if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 80) {
@@ -19,6 +21,9 @@ const loop = setInterval(() => {
 
         mario.style.animation = 'none';
         mario.style.bottom = `${marioPosition}px`;
+
+        clouds.style.animation = 'none';
+        clouds.style.right = `${cloudsPosition}px`;
 
         mario.src = 'img/game-over.png';
         mario.style.width = '80px';
@@ -30,3 +35,9 @@ const loop = setInterval(() => {
 }, 10);
 
 document.addEventListener('keydown', jump);
+
+document.body.addEventListener('click', e => {
+    if (e.target.id == 'jogar-novamente') {
+        window.location.reload()
+    }
+})
